@@ -1,63 +1,24 @@
 #include "3-calc.h"
-#include <stdio.h>
 #include <stdlib.h>
+
 /**
- * op_add - addition of two intergers
- * @a: first interger
- * @b: second interger
- * Return: sum of intergers
+ * get_op_func - select the correct operation function asked by user
+ * @s: operator argument
+ * Return: function pointer corresponding to operator given
  */
-int op_add(int a, int b)
+int (*get_op_func(char *s))(int, int)
 {
-	return (a + b);
-}
-/**
- * op_sub - subtracting  two intergers
- * @a: first interger
- * @b: second interger
- * Return: product of operation
- */
-int op_sub(int a, int b)
-{
-	return (a - b);
-}
-/**
- * op_div -division  two intergers
- * @a: first interger
- * @b: second interger
- * Return: product of operation
- */
-int op_div(int a, int b)
-{
-	if (b == 0)
-	{
-		printf("Error\n");
-		exit(100);
-	}
-	return (a / b);
-}
-/**
- * op_mul - multiplying  two intergers
- * @a: first interger
- * @b: second interger
- * Return: product of operation
- */
-int op_mul(int a, int b)
-{
-	return (a * b);
-}
-/**
- * op_mod -remainderof the division of two intergers
- * @a: first interger
- * @b: second interger
- * Return: product of operation
- */
-int op_mod(int a, int b)
-{
-	if (b == 0)
-	{
-		printf("Error\n");
-		exit(100);
-	}
-	return (a % b);
+	op_t ops[] = {
+		{"+", op_add},
+		{"-", op_sub},
+		{"*", op_mul},
+		{"/", op_div},
+		{"%", op_mod},
+		{NULL, NULL}
+	};
+	int i = 0;
+
+	while (ops[i].op != NULL && *(ops[i].op) != *s)
+		i++;
+	return (ops[i].f);
 }
